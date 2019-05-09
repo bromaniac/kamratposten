@@ -21,6 +21,8 @@ type item struct {
 	Kind    string // post || comment
 }
 
+var users = make(map[string]string)
+
 func homeHandler(w http.ResponseWriter, r *http.Request) {
 	data := "kamratposten"
 	tmpl := template.Must(template.ParseFiles("index.html"))
@@ -28,6 +30,8 @@ func homeHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
+	users["first"] = "password"
+
 	r := mux.NewRouter()
 	r.HandleFunc("/", homeHandler)
 
