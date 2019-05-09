@@ -1,8 +1,7 @@
 package main
 
 import (
-	"fmt"
-	"html"
+	"html/template"
 	"net/http"
 	"time"
 
@@ -10,7 +9,9 @@ import (
 )
 
 func homeHandler(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "Hello, %q", html.EscapeString(r.URL.Path))
+	data := "kamratposten"
+	tmpl := template.Must(template.ParseFiles("index.html"))
+	tmpl.Execute(w, data)
 }
 
 func main() {
