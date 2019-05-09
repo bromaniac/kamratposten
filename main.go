@@ -1,26 +1,28 @@
 package main
 
-import ( 
-    "fmt"
-    "github.com/gorilla/mux"
-    "net/http"
-    "log"
-    "os"
+import (
+	"fmt"
+	"html"
+	"net/http"
+	"time"
+
+	"github.com/gorilla/mux"
 )
 
-func HomeHandler() {
+func homeHandler(w http.ResponseWriter, r *http.Request) {
+	fmt.Fprintf(w, "Hello, %q", html.EscapeString(r.URL.Path))
 }
 
 func main() {
-    r := mux.NewRouter()
-    r.HandleFunc("/", HomeHandler)
+	r := mux.NewRouter()
+	r.HandleFunc("/", homeHandler)
 
-    srv := &hhtp.Server{
-        Addr:   "0.0.0.0:8080",
-        WriteTimeout: time.Seconds * 15,
-        ReadTimeout:  time.Seconds * 15,
-        IdleTimeout:  time.Seconds * 60,
-        Handler: r,
-    }
-    os.Exit(0)
+	srv := &http.Server{
+		Addr:         "0.0.0.0:8080",
+		WriteTimeout: time.Second * 15,
+		ReadTimeout:  time.Second * 15,
+		IdleTimeout:  time.Second * 60,
+		Handler:      r,
+	}
+	srv.ListenAndServe()
 }
