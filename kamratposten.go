@@ -30,7 +30,7 @@ func homeHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-	users["first"] = "password"
+	users["test_user"] = "$2a$14$ajq8Q7fbtFRQvXpdCq7Jcuy.Rx1h/L4J60Otx.gyNLbAYctGMJ9tK" // secret
 
 	r := mux.NewRouter()
 	r.HandleFunc("/", homeHandler)
