@@ -8,6 +8,7 @@ func index() string {
 		<title>{{.}}</title>
 	</head>
 	<body>
+		<p>Välkommen till Kamratposten</p>
     </body>
 </html>`
 	return index

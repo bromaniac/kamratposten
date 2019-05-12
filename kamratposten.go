@@ -2,6 +2,7 @@ package main
 
 import (
 	"html/template"
+	"log"
 	"net/http"
 	"time"
 
@@ -25,8 +26,19 @@ var users = make(map[string]string)
 
 func homeHandler(w http.ResponseWriter, r *http.Request) {
 	data := "kamratposten"
-	tmpl := template.Must(template.ParseFiles("index.html"))
-	tmpl.Execute(w, data)
+	tpl := index()
+
+	t, err := template.New("index").Parse(tpl)
+	check(err)
+
+	err = t.Execute(w, data)
+	check(err)
+}
+
+func check(err error) {
+	if err != nil {
+		log.Fatal(err)
+	}
 }
 
 func main() {
