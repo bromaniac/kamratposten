@@ -6,6 +6,9 @@ kamratposten: *.go
 clean:
 	rm -f kamratposten
 
+rimraf:
+	rm -fr items/ images/
+
 test:
 	go test
 
