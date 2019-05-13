@@ -79,6 +79,9 @@ func main() {
 	r := mux.NewRouter()
 	r.HandleFunc("/", homeHandler)
 	r.HandleFunc("/post", postHandler)
+	r.HandleFunc("/secret", secret)
+	r.HandleFunc("/login", login)
+	r.HandleFunc("/logout", logout)
 
 	srv := &http.Server{
 		Addr:         "0.0.0.0:8080",
