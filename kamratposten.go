@@ -36,23 +36,16 @@ func init() {
 
 func homeHandler(w http.ResponseWriter, r *http.Request) {
 	data := "kamratposten"
-	tpl := index()
+	tmpl := template.Must(template.ParseFiles("views/index.html"))
 
-	t, err := template.New("index").Parse(tpl)
-	check(err)
-
-	err = t.Execute(w, data)
-	check(err)
+	tmpl.Execute(w, data)
 }
 
 func postHandler(w http.ResponseWriter, r *http.Request) {
-	tpl := submitForm()
-
-	t, err := template.New("submitPage").Parse(tpl)
-	check(err)
+	tmpl := template.Must(template.ParseFiles("views/submitPage.html"))
 
 	if r.Method != http.MethodPost {
-		t.Execute(w, nil)
+		tmpl.Execute(w, nil)
 		return
 	}
 
@@ -71,7 +64,7 @@ func postHandler(w http.ResponseWriter, r *http.Request) {
 
 	writeItem(i, 1)
 
-	t.Execute(w, struct{ Success bool }{true})
+	tmpl.Execute(w, struct{ Success bool }{true})
 }
 
 func check(err error) {
