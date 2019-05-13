@@ -35,6 +35,35 @@ func homeHandler(w http.ResponseWriter, r *http.Request) {
 	check(err)
 }
 
+func postHandler(w http.ResponseWriter, r *http.Request) {
+	tpl := submitForm()
+
+	t, err := template.New("submitPage").Parse(tpl)
+	check(err)
+
+	if r.Method != http.MethodPost {
+		t.Execute(w, nil)
+		return
+	}
+
+	i := item{
+		ID:      1,
+		Title:   r.FormValue("Title"),
+		URL:     r.FormValue("URL"),
+		Image:   "foo",
+		Text:    r.FormValue("Text"),
+		Created: time.Now(),
+		Parent:  0,
+		Kid:     0,
+		By:      "first",
+		Kind:    "post",
+	}
+
+	writeItem(i, 1)
+
+	t.Execute(w, struct{ Success bool }{true})
+}
+
 func check(err error) {
 	if err != nil {
 		log.Fatal(err)
@@ -46,6 +75,7 @@ func main() {
 
 	r := mux.NewRouter()
 	r.HandleFunc("/", homeHandler)
+	r.HandleFunc("/post", postHandler)
 
 	srv := &http.Server{
 		Addr:         "0.0.0.0:8080",

@@ -25,6 +25,19 @@ func login() string {
 }
 
 func submitForm() string {
-	var submitForm = ``
+	var submitForm = `{{if .Success}}
+	<h1>Message posted OK.</h1>
+{{else}}
+	<h1>Submit</h1>
+	<form method="POST">
+		<label>URL:</label><br />
+		<input type="text" name="URL"><br />
+		<label>Title:</label><br />
+		<input type="text" name="Title"><br />
+		<label>Text:</label><br />
+		<textarea name="Text"></textarea><br />
+		<input type="submit">
+	</form>
+{{end}}`
 	return submitForm
 }
