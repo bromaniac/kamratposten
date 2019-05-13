@@ -6,8 +6,8 @@ import (
 	"strconv"
 )
 
-func readItem(i int64) item {
-	file, err := ioutil.ReadFile(strconv.FormatInt(i, 10) + ".json")
+func readItem(n int64) item {
+	file, err := ioutil.ReadFile(strconv.FormatInt(n, 10) + ".json")
 	check(err)
 
 	data := item{}
@@ -18,10 +18,10 @@ func readItem(i int64) item {
 	return data
 }
 
-func writeItem(i item) {
+func writeItem(i item, n int64) {
 	b, err := json.Marshal(i)
 	check(err)
 
-	err = ioutil.WriteFile("1.json", b, 0644)
+	err = ioutil.WriteFile(strconv.FormatInt(n, 10)+".json", b, 0644)
 	check(err)
 }
