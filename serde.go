@@ -7,7 +7,7 @@ import (
 )
 
 func readItem(n int64) item {
-	file, err := ioutil.ReadFile(strconv.FormatInt(n, 10) + ".json")
+	file, err := ioutil.ReadFile("items/" + strconv.FormatInt(n, 10) + ".json")
 	check(err)
 
 	data := item{}
@@ -22,6 +22,6 @@ func writeItem(i item, n int64) {
 	b, err := json.Marshal(i)
 	check(err)
 
-	err = ioutil.WriteFile(strconv.FormatInt(n, 10)+".json", b, 0644)
+	err = ioutil.WriteFile("items/" + strconv.FormatInt(n, 10)+".json", b, 0644)
 	check(err)
 }
