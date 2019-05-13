@@ -4,6 +4,7 @@ import (
 	"html/template"
 	"log"
 	"net/http"
+	"os"
 	"time"
 
 	"github.com/gorilla/mux"
@@ -23,6 +24,15 @@ type item struct {
 }
 
 var users = make(map[string]string)
+
+func init() {
+	if _, err := os.Stat("items"); os.IsNotExist(err) {
+		os.Mkdir("items", 0755)
+	}
+	if _, err := os.Stat("images"); os.IsNotExist(err) {
+		os.Mkdir("images", 0755)
+	}
+}
 
 func homeHandler(w http.ResponseWriter, r *http.Request) {
 	data := "kamratposten"
