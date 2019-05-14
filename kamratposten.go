@@ -90,5 +90,6 @@ func main() {
 		IdleTimeout:  time.Second * 60,
 		Handler:      r,
 	}
-	srv.ListenAndServe()
+	log.Printf("Server is listening at %s", srv.Addr)
+	log.Fatal(srv.ListenAndServe())
 }
