@@ -29,12 +29,16 @@ func secret(w http.ResponseWriter, r *http.Request) {
 func login(w http.ResponseWriter, r *http.Request) {
 	session, _ := store.Get(r, "kamratposten")
 
-	// Authentication goes here
-	// ...
+	password := r.FormValue("password")
 
-	// Set user as authenticated
-	session.Values["authenticated"] = true
-	session.Save(r, w)
+	hash, err := hashPassword(password)
+	check(err)
+
+	if checkPasswordHash(users["test_user"], hash) {
+		// Set user as authenticated
+		session.Values["authenticated"] = true
+		session.Save(r, w)
+	}
 }
 
 func logout(w http.ResponseWriter, r *http.Request) {
