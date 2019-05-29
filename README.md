@@ -1,6 +1,9 @@
-A super simple image board intended for < 10 users.
+# Kamratposten
+
+A super simple image board and link aggregator intended for a closed group of < 10 users.
 
 Goals:
+
 - No database (data on disk)
 - Serialize data to JSON
 - No anonymous posting
