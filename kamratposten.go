@@ -73,6 +73,10 @@ func check(err error) {
 	}
 }
 
+func writeItem(i item, n int64) {
+	// TODO
+}
+
 func main() {
 	users["test_user"] = "$2a$14$ajq8Q7fbtFRQvXpdCq7Jcuy.Rx1h/L4J60Otx.gyNLbAYctGMJ9tK" // secret
 
