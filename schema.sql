@@ -1,0 +1,1 @@
+create table items (id integer primary key, title text, url text, image text, post text, created text,  parent integer, kid integer, kind text)
