@@ -4,7 +4,8 @@ A super simple image board and link aggregator intended for a closed group of < 
 
 Goals:
 
-- Use sqlite as database
+- No database (data on disk)
+- Serialize data to JSON
 - No anonymous posting
 - Hardcoded users to start with
 - One static binary that can be rsynced to a server
