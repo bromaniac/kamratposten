@@ -18,7 +18,7 @@ type item struct {
 	Text    string
 	Created time.Time
 	Parent  int64
-	Kid     int64
+	Child   int64
 	By      string // user
 	Kind    string // post || comment
 }
@@ -57,7 +57,7 @@ func postHandler(w http.ResponseWriter, r *http.Request) {
 		Text:    r.FormValue("Text"),
 		Created: time.Now(),
 		Parent:  0,
-		Kid:     0,
+		Child:   0,
 		By:      "first",
 		Kind:    "post",
 	}
