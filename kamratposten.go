@@ -2,9 +2,11 @@ package main
 
 import (
 	"html/template"
+	"io/ioutil"
 	"log"
 	"net/http"
 	"os"
+	"strconv"
 	"time"
 
 	"github.com/gorilla/mux"
@@ -22,8 +24,6 @@ type item struct {
 	By      string // user
 	Kind    string // post || comment
 }
-
-var users = make(map[string]string)
 
 func init() {
 	if _, err := os.Stat("items"); os.IsNotExist(err) {
@@ -50,7 +50,7 @@ func postHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	i := item{
-		ID:      1,
+		ID:      0,
 		Title:   r.FormValue("Title"),
 		URL:     r.FormValue("URL"),
 		Image:   "foo",
@@ -58,11 +58,12 @@ func postHandler(w http.ResponseWriter, r *http.Request) {
 		Created: time.Now(),
 		Parent:  0,
 		Child:   0,
-		By:      "first",
+		By:      "anon",
 		Kind:    "post",
 	}
 
-	writeItem(i, 1)
+	n := getNext()
+	writeItem(i, n)
 
 	tmpl.Execute(w, struct{ Success bool }{true})
 }
@@ -73,13 +74,25 @@ func check(err error) {
 	}
 }
 
+// Get the next ID for post or thread
+func getNext() int64 {
+	var max int64 = 0
+	files, err := ioutil.ReadDir("items/")
+	check(err)
+	for _, f := range files {
+		n, err := strconv.ParseInt(f.Name(), 10, 64)
+		check(err)
+		if n > max {
+			max = n
+		}
+	}
+	return max + 1
+}
+
 func main() {
 	r := mux.NewRouter()
 	r.HandleFunc("/", homeHandler)
 	r.HandleFunc("/post", postHandler)
-	r.HandleFunc("/secret", secret)
-	r.HandleFunc("/login", login)
-	r.HandleFunc("/logout", logout)
 
 	srv := &http.Server{
 		Addr:         "0.0.0.0:8080",
