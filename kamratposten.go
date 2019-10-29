@@ -16,7 +16,7 @@ type item struct {
 	Title   string
 	URL     string
 	Image   string
-	Post    string
+	Text    string
 	Created time.Time
 	Parent  int64
 	Kid     int64
@@ -55,7 +55,7 @@ func postHandler(w http.ResponseWriter, r *http.Request) {
 		Title:   r.FormValue("Title"),
 		URL:     r.FormValue("URL"),
 		Image:   "foo",
-		Post:    r.FormValue("Text"),
+		Text:    r.FormValue("Text"),
 		Created: time.Now(),
 		Parent:  0,
 		Kid:     0,
