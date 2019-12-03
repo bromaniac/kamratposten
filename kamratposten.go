@@ -8,8 +8,6 @@ import (
 	"os"
 	"strconv"
 	"time"
-
-	"github.com/gorilla/mux"
 )
 
 type item struct {
@@ -90,16 +88,14 @@ func getNext() int64 {
 }
 
 func main() {
-	r := mux.NewRouter()
-	r.HandleFunc("/", homeHandler)
-	r.HandleFunc("/post", postHandler)
+	http.HandleFunc("/", homeHandler)
+	http.HandleFunc("/post", postHandler)
 
 	srv := &http.Server{
 		Addr:         "0.0.0.0:8080",
 		WriteTimeout: time.Second * 15,
 		ReadTimeout:  time.Second * 15,
 		IdleTimeout:  time.Second * 60,
-		Handler:      r,
 	}
 	log.Printf("Server is listening at %s", srv.Addr)
 	log.Fatal(srv.ListenAndServe())
