@@ -47,6 +47,9 @@ func postHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	p, err := strconv.ParseInt(r.FormValue("Parent"), 10, 64)
+	check(err)
+
 	i := item{
 		ID:      0,
 		Title:   r.FormValue("Title"),
@@ -54,7 +57,7 @@ func postHandler(w http.ResponseWriter, r *http.Request) {
 		Image:   "foo",
 		Text:    r.FormValue("Text"),
 		Created: time.Now(),
-		Parent:  0,
+		Parent:  p,
 		Child:   0,
 		By:      "anon",
 		Kind:    "post",
